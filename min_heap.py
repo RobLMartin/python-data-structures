@@ -6,6 +6,12 @@ class MinHeap:
     self.heap.append(element)
     self._heapify_up(len(self.heap) - 1)
 
+  def _heapify_up(self, index):
+    parent_index = (index - 1) // 2
+    if index > 0 and self.heap[index] < self.heap[parent_index]:
+      self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
+      self._heapify_up(parent_index)
+
   def pop_min(self):
     if len(self.heap) == 0:
       raise IndexError("pop from empty heap")
@@ -14,12 +20,6 @@ class MinHeap:
     self.heap[0] = self.heap.pop()
     self._heapify_down(0)
     return min_item
-
-  def _heapify_up(self, index):
-    parent_index = (index - 1) // 2
-    if index > 0 and self.heap[index] <self.heap[parent_index]:
-      self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
-      self._heapify_up(parent_index)
 
   def _heapify_down(self, index):
     smallest = index
@@ -38,10 +38,15 @@ class MinHeap:
 
 if __name__ == "__main__":
   min_heap = MinHeap()
-  min_heap.insert(5)
+  min_heap.insert(1)
   min_heap.insert(3)
   min_heap.insert(8)
-  min_heap.insert(1)
+  min_heap.insert(5)
+  min_heap.insert(9)
+  min_heap.insert(14)
+  min_heap.insert(11)
+  min_heap.insert(10)
+  min_heap.insert(21)
   print(min_heap.heap)
-  print("Removed min:", min_heap.pop_min())
-  print("New heap:", min_heap.heap)
+  # print("Removed min:", min_heap.pop_min())
+  # print("New heap:", min_heap.heap)
