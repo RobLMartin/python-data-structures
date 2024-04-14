@@ -4,4 +4,5 @@ class MinHeap:
 
 
 if __name__ == "__main__":
-  pass
+  min_heap = MinHeap()
+  print(min_heap.heap)
