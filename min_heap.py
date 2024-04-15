@@ -21,7 +21,7 @@ class MinHeap:
     return self.get_left_child_index(index) < self.size
   
   def has_right_child(self, index):
-    return self.get_right_child_index(index) > self.size
+    return self.get_right_child_index(index) < self.size
   
   def parent(self, index):
     return self.storage[self.get_parent_index(index)]
@@ -58,23 +58,20 @@ class MinHeap:
     data = self.storage[0]
     self.storage[0] = self.storage[self.size - 1]
     self.size -= 1
-    self.heapify_down()
+    self.heapify_down(0)
     return data
 
-  def heapify_down(self):
-    index = 0
-    while self.has_left_child(index):
+  def heapify_down(self, index):
+    smaller_child_index = index
+    if self.has_left_child(index) and self.storage[smaller_child_index] > self.left_child(index):
       smaller_child_index = self.get_left_child_index(index)
 
-      if self.has_right_child(index) and self.right_child(index) < self.left_child(index):
+    if self.has_right_child(index) and self.storage[smaller_child_index] > self.right_child(index):
         smaller_child_index = self.get_right_child_index(index)
 
-      if self.storage[index] < self.storage[smaller_child_index]:
-        break
-      else:
-        self.swap(index, smaller_child_index)
-      
-      index = smaller_child_index
+    if smaller_child_index != index:
+      self.swap(index, smaller_child_index)
+      self.heapify_down(smaller_child_index)
 
 if __name__ == "__main__":
   min_heap = MinHeap(7)
@@ -85,8 +82,9 @@ if __name__ == "__main__":
   min_heap.insert(8)
   min_heap.insert(15)
   min_heap.insert(30)
-  print(min_heap.storage)
+  print(min_heap.storage[:min_heap.size])
 
   min_heap.remove_min()
-
+  print(min_heap.storage[:min_heap.size])
+  min_heap.remove_min()
   print(min_heap.storage[:min_heap.size])
