@@ -38,6 +38,26 @@ class MinHeap:
   def swap(self, index1, index2):
     self.storage[index1], self.storage[index2] = self.storage[index2], self.storage[index1]
 
+  def insert(self, data):
+    if self.is_full():
+      raise("heap is full")
+    
+    self.storage[self.size] = data
+    self.size += 1
+    self.heapify_up()
+
+  def heapify_up(self):
+    index = self.size - 1
+
+    while self.has_parent(index) and self.parent(index) > self.storage[index]:
+      self.swap(self.get_parent_index(index), index)
+      index = self.get_parent_index(index)
+
 
 if __name__ == "__main__":
-  min_heap = MinHeap()
+  min_heap = MinHeap(7)
+  min_heap.insert(10)
+  min_heap.insert(20)
+  min_heap.insert(5)
+
+print(min_heap.storage)
