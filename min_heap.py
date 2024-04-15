@@ -44,14 +44,12 @@ class MinHeap:
     
     self.storage[self.size] = data
     self.size += 1
-    self.heapify_up()
+    self.heapify_up(self.size-1)
 
-  def heapify_up(self):
-    index = self.size - 1
-
-    while self.has_parent(index) and self.parent(index) > self.storage[index]:
+  def heapify_up(self, index):
+    if self.has_parent(index) and self.parent(index) > self.storage[index]:
       self.swap(self.get_parent_index(index), index)
-      index = self.get_parent_index(index)
+      self.heapify_up(self.get_parent_index(index))
 
 
 if __name__ == "__main__":
@@ -59,5 +57,7 @@ if __name__ == "__main__":
   min_heap.insert(10)
   min_heap.insert(20)
   min_heap.insert(5)
+  min_heap.insert(8)
+  min_heap.insert(0)
 
 print(min_heap.storage)
